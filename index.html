@@ -17,6 +17,9 @@
     <audio hidden="true" id="audio3" controls loop>
       <source src="audio3.mp3" type="audio/mp3" />
     </audio>
+    <audio hidden="true" id="audio2" controls loop>
+      <source src="audio2.mp3" type="audio/mp3" />
+    </audio>
     <ul>
       <li>
         <label>
@@ -157,11 +160,11 @@
           x.pause();
         }
       };
-      document.addEventListener("mousemove", function (e) {
+      setInterval(() => {
         let body = document.querySelector("body");
         let heart = document.createElement("span");
-        let x = e.offsetX;
-        let y = e.offsetY;
+        let x = Math.random() * 1203;
+        let y = Math.random() * 1203;
         heart.style.left = x + "px";
         heart.style.top = y + "px";
         let size = 10;
@@ -174,7 +177,7 @@
         setTimeout(function () {
           heart.remove();
         }, 1000);
-      });
+      }, 100);
     </script>
   </body>
 </html>

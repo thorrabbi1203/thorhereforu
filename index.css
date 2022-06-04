@@ -102,26 +102,29 @@ span {
   position: absolute;
   pointer-events: none;
   transition: 0.5s;
-  filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.5));
   animation: animate1 1s linear infinite;
+  color: #00f3ff;
 }
 span::before {
-  content: "";
+  font-family: FontAwesome;
+  content: "\f004";
   position: absolute;
   width: 100%;
+  font-size: 50px;
   height: 100%;
-  background: url(heart.png);
-  background-size: cover;
   animation: moveShape 1s linear infinite;
+  text-shadow: 0 0 15px #00f3ff, 0 0 25px #00f3ff;
 }
 @keyframes animate1 {
   0%,
   100% {
     opacity: 0;
+    filter: hue-rotate(360deg);
   }
   20%,
   80% {
     opacity: 1;
+    filter: hue-rotate(0deg);
   }
 }
 @keyframes moveShape {
