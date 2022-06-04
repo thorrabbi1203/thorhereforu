@@ -57,11 +57,11 @@ ul li label .icon:before {
   border-top-right-radius: 8px;
   background: rgba(255, 255, 255, 0.05);
 }
-ul li label input[type="checkbox"]:checked ~ .icon {
+ul li label input[type="checkbox"] ~ .icon {
   box-shadow: inset 0px 0px 2px rgba(255, 255, 255, 0.05),
     inset 4px 4px 6px rgba(0, 0, 0, 0.2);
 }
-ul li label input[type="checkbox"]:checked ~ .icon .fa {
+ul li label input[type="checkbox"] ~ .icon .fa {
   color: #00f3ff;
   text-shadow: 0 0 15px #00f3ff, 0 0 25px #00f3ff;
   animation: animate 5s linear infinite;
@@ -73,4 +73,23 @@ ul li label input[type="checkbox"]:checked ~ .icon .fa {
   100% {
     filter: hue-rotate(360deg);
   }
+}
+
+.visualizer-container {
+  position: absolute;
+
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  text-align: center;
+}
+
+.visualizer-container__bar {
+  display: inline-block;
+  background-color: #00f3ff;
+  margin: 0 2px;
+  width: 5px;
+  box-shadow: 0 0 15px #00f3ff, 0 0 25px #00f3ff;
+  animation: animate 5s linear infinite;
 }

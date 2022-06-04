@@ -11,13 +11,20 @@
     <link rel="stylesheet" type="text/css" href="./index.css" />
   </head>
   <body>
-    <audio hidden="true" id="audio" controls loop>
-      <source src="audio.mp3" type="audio/mp3" />
+    <audio hidden="true" id="audio4" controls loop>
+      <source src="audio4.mp3" type="audio/mp3" />
+    </audio>
+    <audio hidden="true" id="audio3" controls loop>
+      <source src="audio3.mp3" type="audio/mp3" />
     </audio>
     <ul>
       <li>
         <label>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            id="playAudio0"
+            onchange="play('audio0', 'playAudio0')"
+          />
           <div class="icon">
             <i class="fa fa-heart" aria-hidden="true"></i>
           </div>
@@ -25,7 +32,11 @@
       </li>
       <li>
         <label>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            id="playAudio1"
+            onchange="play('audio1', 'playAudio1')"
+          />
           <div class="icon">
             <i class="fa fa-heartbeat" aria-hidden="true"></i>
           </div>
@@ -33,7 +44,11 @@
       </li>
       <li>
         <label>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            id="playAudio2"
+            onchange="play('audio2', 'playAudio2')"
+          />
           <div class="icon">
             <i class="fa fa-heart" aria-hidden="true"></i>
           </div>
@@ -41,7 +56,11 @@
       </li>
       <li>
         <label>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            id="playAudio3"
+            onchange="play('audio3', 'playAudio3')"
+          />
           <div class="icon">
             <i class="fa fa-heartbeat" aria-hidden="true"></i>
           </div>
@@ -49,19 +68,91 @@
       </li>
       <li>
         <label>
-          <input type="checkbox" id="playAudio" onchange="play()" />
+          <input
+            type="checkbox"
+            id="playAudio4"
+            onchange="play('audio4', 'playAudio4')"
+          />
           <div class="icon">
             <i class="fa fa-heart" aria-hidden="true"></i>
           </div>
         </label>
       </li>
     </ul>
+    <div class="visualizer-container"></div>
     <script type="text/javascript">
-      let play = function () {
-        let a = document.getElementById("playAudio").checked;
-        var x = document.getElementById("audio");
+      let play = function (audioId, checkBoxId) {
+        const NBR_OF_BARS =
+          window.screen.availWidth / 8 > 150
+            ? 150
+            : window.screen.availWidth / 8;
+
+        ["audio0", "audio1", "audio2", "audio3", "audio4"]
+          .filter((i) => i !== audioId)
+          .map((i) => {
+            const existItem = document.getElementById(i);
+            for (let index = 0; index < NBR_OF_BARS; index++) {
+              const bar = document.getElementById(`${i}${index}`);
+              if (!!bar) {
+                bar.style.display = "none";
+              }
+            }
+            !!existItem && existItem.pause();
+          });
+        ["playAudio0", "playAudio1", "playAudio2", "playAudio3", "playAudio4"]
+          .filter((i) => i !== checkBoxId)
+          .map((i) => {
+            const existItem = document.getElementById(i);
+            !!existItem && (existItem.checked = false);
+          });
+        let a = document.getElementById(checkBoxId).checked;
+        var x = document.getElementById(audioId);
         if (a) {
           x.play();
+          x.volume = 0.05;
+          const existBar = document.getElementById(`${audioId}0`);
+          if (!existBar) {
+            const ctx = new AudioContext();
+            const audioSource = ctx.createMediaElementSource(x);
+            const analayzer = ctx.createAnalyser();
+
+            audioSource.connect(analayzer);
+            audioSource.connect(ctx.destination);
+            const frequencyData = new Uint8Array(analayzer.frequencyBinCount);
+            analayzer.getByteFrequencyData(frequencyData);
+            const visualizerContainer = document.querySelector(
+              ".visualizer-container"
+            );
+            for (let i = 0; i < NBR_OF_BARS; i++) {
+              const bar = document.createElement("DIV");
+              bar.setAttribute("id", `${audioId}` + i);
+              bar.setAttribute("class", "visualizer-container__bar");
+              visualizerContainer.appendChild(bar);
+            }
+            function renderFrame() {
+              analayzer.getByteFrequencyData(frequencyData);
+              for (let i = 0; i < NBR_OF_BARS; i++) {
+                const index = (i + 10) * 2;
+                const fd = frequencyData[index];
+                const bar = document.querySelector(`#${audioId}` + i);
+                if (!bar) {
+                  continue;
+                }
+                const barHeight = Math.max(4, fd || 0);
+                bar.style.height = barHeight + "px";
+              }
+              window.requestAnimationFrame(renderFrame);
+            }
+
+            renderFrame();
+          } else {
+            for (let i = 0; i < NBR_OF_BARS; i++) {
+              const bar = document.getElementById(`${audioId}` + i);
+              if (!!bar) {
+                bar.style.display = "";
+              }
+            }
+          }
         } else {
           x.pause();
         }
