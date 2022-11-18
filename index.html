@@ -26,77 +26,77 @@
     <audio hidden="true" id="audio0" controls loop>
       <source src="audio0.mp3" type="audio/mp3" />
     </audio>
-    <ul>
-      <li>
-        <label>
-          <input
-            type="checkbox"
-            id="playAudio0"
-            onchange="play('audio0', 'playAudio0')"
-          />
-          <div class="icon">
-            <i class="fa fa-heart" aria-hidden="true"></i>
-          </div>
-        </label>
-      </li>
-      <li>
-        <label>
-          <input
-            type="checkbox"
-            id="playAudio1"
-            onchange="play('audio1', 'playAudio1')"
-          />
-          <div class="icon">
-            <i class="fa fa-heartbeat" aria-hidden="true"></i>
-          </div>
-        </label>
-      </li>
-      <li>
-        <label>
-          <input
-            type="checkbox"
-            id="playAudio2"
-            onchange="play('audio2', 'playAudio2')"
-          />
-          <div class="icon">
-            <i class="fa fa-heart" aria-hidden="true"></i>
-          </div>
-        </label>
-      </li>
-      <li>
-        <label>
-          <input
-            type="checkbox"
-            id="playAudio3"
-            onchange="play('audio3', 'playAudio3')"
-          />
-          <div class="icon">
-            <i class="fa fa-heartbeat" aria-hidden="true"></i>
-          </div>
-        </label>
-      </li>
-      <li>
-        <label>
-          <input
-            type="checkbox"
-            id="playAudio4"
-            onchange="play('audio4', 'playAudio4')"
-          />
-          <div class="icon">
-            <i class="fa fa-heart" aria-hidden="true"></i>
-          </div>
-        </label>
-      </li>
-    </ul>
-    <div class="visualizer-container"></div>
+    <div class="container">
+      <ul>
+        <li>
+          <label>
+            <input
+              type="checkbox"
+              id="playAudio0"
+              onchange="play('audio0', 'playAudio0')"
+            />
+            <div class="icon">
+              <i class="fa fa-heart" aria-hidden="true"></i>
+            </div>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input
+              type="checkbox"
+              id="playAudio1"
+              onchange="play('audio1', 'playAudio1')"
+            />
+            <div class="icon">
+              <i class="fa fa-heartbeat" aria-hidden="true"></i>
+            </div>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input
+              type="checkbox"
+              id="playAudio2"
+              onchange="play('audio2', 'playAudio2')"
+            />
+            <div class="icon">
+              <i class="fa fa-heart" aria-hidden="true"></i>
+            </div>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input
+              type="checkbox"
+              id="playAudio3"
+              onchange="play('audio3', 'playAudio3')"
+            />
+            <div class="icon">
+              <i class="fa fa-heartbeat" aria-hidden="true"></i>
+            </div>
+          </label>
+        </li>
+        <li>
+          <label>
+            <input
+              type="checkbox"
+              id="playAudio4"
+              onchange="play('audio4', 'playAudio4')"
+            />
+            <div class="icon">
+              <i class="fa fa-heart" aria-hidden="true"></i>
+            </div>
+          </label>
+        </li>
+      </ul>
+      <div class="visualizer-container"></div>
+    </div>
+    <div id="heart-container" class="heart-container"></div>
     <script type="text/javascript">
       let play = function (audioId, checkBoxId) {
-        const NBR_OF_BARS =
-          window.screen.availWidth / 8 > 150
-            ? 150
-            : window.screen.availWidth / 8;
+        const NBR_OF_BARS = window.outerWidth;
 
-        ["audio0", "audio1", "audio2", "audio3", "audio4"]
+        [("audio0", "audio1", "audio2", "audio3", "audio4")]
           .filter((i) => i !== audioId)
           .map((i) => {
             const existItem = document.getElementById(i);
@@ -167,23 +167,26 @@
         }
       };
       setInterval(() => {
-        let body = document.querySelector("body");
+        const deviceHeight = window.outerHeight;
+        const deviceWidth = window.outerWidth;
+        let container = document.getElementById("heart-container");
         let heart = document.createElement("span");
-        let x = Math.random() * 500;
-        let y = Math.random() * 500;
-        heart.style.left = x + "px";
-        heart.style.top = y + "px";
+        const isLeftOrRight = Math.floor(Math.random() * 2);
+        let y = Math.random() * deviceWidth * 2;
+        let x = Math.random() * deviceHeight * 2;
+        heart.style.left = y + "px";
+        heart.style.top = x + "px";
         let size = 10;
         let transformValue = Math.random() * 360;
         heart.style.width = 20 + size + "px";
         heart.style.height = 20 + size + "px";
         heart.style.transform = "rotate(" + transformValue + "deg)";
 
-        body.appendChild(heart);
+        container.appendChild(heart);
 
         setTimeout(function () {
           heart.remove();
-        }, 1000);
+        }, 2000);
       }, 100);
     </script>
   </body>

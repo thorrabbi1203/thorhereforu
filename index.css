@@ -4,11 +4,7 @@
   box-sizing: border-box;
 }
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #18191f;
-  min-height: 100vh;
+  overflow: hidden;
 }
 ul {
   position: relative;
@@ -81,21 +77,41 @@ ul li label input[type="checkbox"] ~ .icon .fa {
 
 .visualizer-container {
   position: absolute;
-
   bottom: 0;
   right: 0;
   left: 0;
-
   text-align: center;
+  overflow: hidden;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .visualizer-container__bar {
   display: inline-block;
   background-color: #00f3ff;
   margin: 0 2px;
-  width: 5px;
+  width: 8px;
   box-shadow: 0 0 15px #00f3ff, 0 0 25px #00f3ff;
   animation: animate 5s linear infinite;
+}
+.heart-container {
+  height: 100vh;
+  width: 100vw;
+  z-index: 100;
+  position: absolute;
+  background: #18191f;
+  overflow: hidden;
+}
+.container {
+  position: absolute;
+  z-index: 1000;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 span {
