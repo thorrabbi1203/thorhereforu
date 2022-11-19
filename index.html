@@ -14,6 +14,9 @@
     <audio hidden="true" id="audio2" controls loop>
       <source src="audio2.mp3" type="audio/mp3" />
     </audio>
+    <audio hidden="true" id="audio3" controls loop>
+      <source src="audio3.mp3" type="audio/mp3" />
+    </audio>
     <audio hidden="true" id="audio1" controls loop>
       <source src="audio1.mp3" type="audio/mp3" />
     </audio>
@@ -58,6 +61,18 @@
             </div>
           </label>
         </li>
+        <li>
+          <label>
+            <input
+              type="checkbox"
+              id="playAudio3"
+              onchange="play('audio3', 'playAudio3')"
+            />
+            <div class="icon">
+              <i class="fa fa-heart" aria-hidden="true"></i>
+            </div>
+          </label>
+        </li>
       </ul>
       <div class="visualizer-container"></div>
     </div>
@@ -66,7 +81,7 @@
       let play = function (audioId, checkBoxId) {
         const NBR_OF_BARS = window.outerWidth;
 
-        ["audio0", "audio1", "audio2"]
+        ["audio0", "audio1", "audio2", "audio3"]
           .filter((i) => i !== audioId)
           .map((i) => {
             const existItem = document.getElementById(i);
@@ -78,7 +93,7 @@
             }
             !!existItem && existItem.pause();
           });
-        ["playAudio0", "playAudio1", "playAudio2"]
+        ["playAudio0", "playAudio1", "playAudio2", "playAudio3"]
           .filter((i) => i !== checkBoxId)
           .map((i) => {
             const existItem = document.getElementById(i);
